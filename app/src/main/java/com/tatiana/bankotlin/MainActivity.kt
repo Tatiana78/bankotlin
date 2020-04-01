@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.PagerAdapter
 import com.tatiana.bankotlin.R
+import com.tatiana.bankotlin.Tip
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.tip_content.view.*
 
@@ -15,15 +17,22 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        viewpager.adapter = OnboardingAdapter();
+        val tips: Array<Tip> = arrayOf(
+            Tip("Tip 1", R.color.colorAccent),
+            Tip("Tip 2", R.color.colorPrimary),
+            Tip("Tip 3", R.color.colorPrimaryDark)
+            )
+        viewpager.adapter = OnboardingAdapter(tips);
     }
 
-    private inner class OnboardingAdapter : PagerAdapter () {
+    private inner class OnboardingAdapter(val tips: Array<Tip>) : PagerAdapter() {
 
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
-            var view = layoutInflater.inflate(R.layout.tip_content, container, false);
+            val view = layoutInflater.inflate(R.layout.tip_content, container, false);
 
-            view.tip_title.text = "TATIANA";
+            view.tip_title.text = tips[position].title
+            view.tip_title.setTextColor(ContextCompat.getColor(this@MainActivity,
+                tips[position].color))
 
             container.addView(view);
 
@@ -39,7 +48,7 @@ class MainActivity : AppCompatActivity() {
             return view == `object`;
         }
 
-        override fun getCount(): Int = 3
+        override fun getCount(): Int = tips.size
 
     }
 }
