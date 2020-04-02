@@ -71,6 +71,14 @@ class MainActivity : AppCompatActivity() {
 
             }
         })
+        back.setOnClickListener {
+            viewpager.setCurrentItem(viewpager.currentItem - 1, true)
+        }
+
+        next.setOnClickListener {
+            viewpager.setCurrentItem(viewpager.currentItem + 1, true)
+        }
+
     }
 
     private fun addDots(size: Int, position: Int = 0) {
