@@ -2,6 +2,7 @@ package com.tatiana.bankotlin.ui.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
@@ -13,6 +14,7 @@ import com.tatiana.bankotlin.R
 import com.tatiana.bankotlin.Tip
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.tip_content.view.*
+import kotlin.math.abs
 
 class MainActivity : AppCompatActivity() {
 
@@ -46,6 +48,12 @@ class MainActivity : AppCompatActivity() {
         addDots(tips.size)
 
         viewpager.adapter = OnboardingAdapter(tips)
+
+        viewpager.setPageTransformer(true){page: View, position: Float ->
+            page.alpha = 1 - abs(position)
+            page.translationX = -position * page.width
+        }
+
         viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
             }
