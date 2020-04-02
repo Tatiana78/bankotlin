@@ -1,6 +1,5 @@
 package com.tatiana.bankotlin.ui.activities
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -8,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.PagerAdapter
+import androidx.viewpager.widget.ViewPager
 import com.tatiana.bankotlin.R
 import com.tatiana.bankotlin.Tip
 import kotlinx.android.synthetic.main.activity_main.*
@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
 
         val tips: Array<Tip> = arrayOf(
@@ -42,14 +43,35 @@ class MainActivity : AppCompatActivity() {
         addDots(tips.size)
 
         viewpager.adapter = OnboardingAdapter(tips)
+        viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {
+            }
+
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+
+            }
+
+            override fun onPageSelected(position: Int) {
+                addDots(tips.size, position)
+
+            }
+        })
     }
 
-    private fun addDots(size: Int) {
+    private fun addDots(size: Int, position: Int = 0) {
+        dots.removeAllViews()
         Array(size) {
             val textView  = TextView(baseContext).apply {
                 text = getText(R.string.dotted)
                 textSize = 35f
-                setTextColor(ContextCompat.getColor(baseContext, android.R.color.darker_gray))
+                setTextColor(
+                    if  (position == it) ContextCompat.getColor(baseContext, android.R.color.white)
+                    else ContextCompat.getColor(baseContext, android.R.color.darker_gray)
+                )
             }
             dots.addView(textView)
         }
