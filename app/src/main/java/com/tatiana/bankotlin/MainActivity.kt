@@ -18,21 +18,38 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val tips: Array<Tip> = arrayOf(
-            Tip("Tip 1", R.color.colorAccent),
-            Tip("Tip 2", R.color.colorPrimary),
-            Tip("Tip 3", R.color.colorPrimaryDark)
+            Tip(
+                "1 Duis metus mi, tristique sit amet dolor sit",
+                "lorem",
+                R.drawable.house,
+                R.drawable.backgroundblue
+            ),
+            Tip(
+                "2 Duis metus mi, tristique sit amet dolor sit",
+                "lorem",
+                R.drawable.woman,
+                R.drawable.backgroundpink
+            ),
+            Tip("3 Duis metus mi, tristique sit amet dolor sit",
+                "lorem",
+                R.drawable.sofa,
+                R.drawable.backgroundorange
             )
-        viewpager.adapter = OnboardingAdapter(tips);
+            )
+        viewpager.adapter = OnboardingAdapter(tips)
     }
 
     private inner class OnboardingAdapter(val tips: Array<Tip>) : PagerAdapter() {
 
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
-            val view = layoutInflater.inflate(R.layout.tip_content, container, false);
+            val view = layoutInflater.inflate(R.layout.tip_content, container, false)
 
-            view.tip_title.text = tips[position].title
-            view.tip_title.setTextColor(ContextCompat.getColor(this@MainActivity,
-                tips[position].color))
+        with(tips[position]) {
+            view.tip_title.text = title
+            view.tip_subtitle.text = subtitle
+            view.tip_logo.setImageResource(logo)
+            view.background = ContextCompat.getDrawable(this@MainActivity, background)
+        }
 
             container.addView(view);
 
