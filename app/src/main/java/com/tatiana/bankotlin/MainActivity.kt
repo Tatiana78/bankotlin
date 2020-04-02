@@ -1,9 +1,11 @@
 package com.tatiana.bankotlin.ui.activities
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.PagerAdapter
 import com.tatiana.bankotlin.R
@@ -36,7 +38,22 @@ class MainActivity : AppCompatActivity() {
                 R.drawable.backgroundorange
             )
             )
+
+        addDots(tips.size)
+
         viewpager.adapter = OnboardingAdapter(tips)
+    }
+
+    private fun addDots(size: Int) {
+        Array(size) {
+            val textView  = TextView(baseContext).apply {
+                text = getText(R.string.dotted)
+                textSize = 35f
+                setTextColor(ContextCompat.getColor(baseContext, android.R.color.darker_gray))
+            }
+            dots.addView(textView)
+        }
+
     }
 
     private inner class OnboardingAdapter(val tips: Array<Tip>) : PagerAdapter() {

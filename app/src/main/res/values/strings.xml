@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">bankotlin</string>
+    <string name="dotted">&#8226;</string>
 </resources>
