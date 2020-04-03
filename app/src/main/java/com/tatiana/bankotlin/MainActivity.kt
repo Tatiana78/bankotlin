@@ -1,5 +1,6 @@
 package com.tatiana.bankotlin.ui.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -76,9 +77,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         next.setOnClickListener {
-            viewpager.setCurrentItem(viewpager.currentItem + 1, true)
+            //viewpager.setCurrentItem(viewpager.currentItem + 1, true)
+            redectHome()
         }
 
+    }
+
+    fun redectHome() {
+        val intent = Intent(this, HomeActivity::class.java)
+        startActivity(intent)
     }
 
     private fun addDots(size: Int, position: Int = 0) {
